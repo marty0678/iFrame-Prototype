@@ -1,0 +1,5 @@
+{
+    "i18n-ally.localesPaths": [
+        "venv/Lib/site-packages/PySide6/examples/widgets/gettext/locales"
+    ]
+}

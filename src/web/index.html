@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      type="text/javascript"
+      src="qrc:///qtwebchannel/qwebchannel.js"
+    ></script>
+    <script type="text/javascript" src="./index.js"></script>
+  </head>
+
+  <body>
+    <h1>iFrame Prototype</h1>
+    <p>Websocket between QT and a website. The future is now.</p>
+
+    <input id="message" type="text" placeholder="What do you want to send?">
+        <button onclick="sendMessage()">Send Message</button>
+    </body>
+
+    <div style="margin-top:10px">
+      <button onclick="getMessage()">
+        Receive Message
+      </button>
+      Returned value from the server:
+      <span id="returnedValue"> -- </span>
+    </div>
+
+    
+  </body>
+</html>
