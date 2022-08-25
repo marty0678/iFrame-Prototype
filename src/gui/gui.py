@@ -3,9 +3,8 @@ from PySide6.QtCore import QThreadPool, QUrl, QSize
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebChannel import QWebChannel
+
 from src.network.backend import Backend
-
-
 from src.gui.compiled.main_window import Ui_MainWindow
 
 
@@ -59,7 +58,7 @@ class FrameWindow(QMainWindow):
 
     def show_frame(self):
         """Launches the frame."""
-        
+
         path = os.path.abspath("src\\web\\index.html")
 
         self.view.load(QUrl.fromLocalFile(path))
