@@ -22,9 +22,9 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(148, 95)
-        MainWindow.setMinimumSize(QSize(148, 95))
-        MainWindow.setMaximumSize(QSize(148, 95))
+        MainWindow.resize(250, 95)
+        MainWindow.setMinimumSize(QSize(250, 95))
+        MainWindow.setMaximumSize(QSize(250, 95))
         MainWindow.setStyleSheet(u"/*-----QWidget-----*/\n"
 "QWidget\n"
 "{\n"
