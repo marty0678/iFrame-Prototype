@@ -1,6 +1,10 @@
 from PySide6.QtCore import Slot, QUrl, QTimer
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEngineProfile, QWebEnginePage
+from PySide6.QtWebEngineCore import (
+    QWebEngineProfile,
+    QWebEnginePage,
+    QWebEngineCertificateError,
+)
 from PySide6.QtNetwork import QNetworkCookie
 
 import src.config as config
@@ -41,7 +45,7 @@ class WebEngineView(QWebEngineView):
         # the persistance does work (after QT's 30 second delay)
         # but all navigation breaks in the browser, despite the
         # actions being enabled. I'm probably missing something.
-        
+
         # BUG 2: After the refactor, the on_cookie_added signal
         # no longer is being being received
         self.profile = QWebEngineProfile("default", self)
@@ -57,6 +61,8 @@ class WebEngineView(QWebEngineView):
         )
 
     def register_signals(self):
+        self.page().certificateError.connect(self.on_certificate_error)
+
         self.cookie_store.cookieAdded.connect(self.on_cookie_added)
 
         self.timer.timeout.connect(self.on_tick)
@@ -79,10 +85,19 @@ class WebEngineView(QWebEngineView):
         cookie_name = cookie.name().toStdString()
         self.cookies[cookie_name] = cookie
 
+    @Slot(QWebEngineCertificateError)
+    def on_certificate_error(self, error):
+        if (
+            error.url().host() in config.ALLOWED_INSECURE_HOSTS
+            and error.type() == QWebEngineCertificateError.CertificateAuthorityInvalid
+        ):
+            error.acceptCertificate()
+
     @Slot()
     def on_tick(self):
         """Just to monitor the cookies for testing."""
 
-        print("Cookies:")
-        for cookie_name, cookie in self.cookies.items():
-            print(cookie.toRawForm().toStdString())
+        if config.ENABLE_COOKIE_LOGGING:
+            print("Cookies:")
+            for cookie_name, cookie in self.cookies.items():
+                print(cookie.toRawForm().toStdString())

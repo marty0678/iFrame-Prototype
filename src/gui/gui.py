@@ -90,9 +90,9 @@ class FrameWindow(QMainWindow):
         path = os.path.abspath("src\\web\\index.html")
 
         match config.OPERATION_MODE:
-            case OperationModes.WEBSOCKET:
+            case OperationModes.LOCAL:
                 self.view.load(QUrl.fromLocalFile(path))
-            case OperationModes.COOKIE:
-                self.view.load(QUrl("https://google.com"))
+            case OperationModes.EXTERNAL:
+                self.view.load(QUrl(config.WEBSITE_URL))
 
         self.view.show()
